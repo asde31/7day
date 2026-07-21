@@ -119,3 +119,52 @@ export interface QuitProfile {
   packPriceUzs: number;
   cigarettesPerPack: number;
 }
+
+// ---------------------------------------------------------------------------
+// Module 3: AI nutrition
+// ---------------------------------------------------------------------------
+
+export type Sex = 'male' | 'female';
+export type Goal = 'lose' | 'maintain' | 'gain';
+export type MealType = 'breakfast' | 'lunch' | 'dinner' | 'snack';
+export type MealSource = 'ai_photo' | 'manual';
+
+export interface Macros {
+  kcal: number;
+  protein: number;
+  fat: number;
+  carbs: number;
+}
+
+export interface NutritionProfile {
+  sex: Sex;
+  age: number;
+  heightCm: number;
+  weightKg: number;
+  activity: Activity;
+  goal: Goal;
+}
+
+/** Daily calorie + macro targets derived from the profile. */
+export interface NutritionTargets extends Macros {}
+
+/** One food item returned by the vision model — always user-editable before saving. */
+export interface RecognizedFood {
+  name: string;
+  grams: number;
+  macros: Macros;
+  /** Model self-reported confidence 0–1; drives whether we nudge the user to check. */
+  confidence: number;
+}
+
+export interface MealEntry {
+  id: string;
+  /** ISO date YYYY-MM-DD. */
+  date: string;
+  mealType: MealType;
+  name: string;
+  grams: number;
+  macros: Macros;
+  source: MealSource;
+  at: string;
+}

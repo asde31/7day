@@ -1,102 +1,135 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
 import { ScrollView, View } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { AppText, Button, Card, Row, Screen } from '@/components/ui';
+import { AppText, Button, Card, ProgressBar, Row, Screen } from '@/components/ui';
 import { useTheme } from '@/theme/ThemeProvider';
-import { radius, spacing } from '@/theme';
+import { spacing } from '@/theme';
+import { useNutritionStore } from '@/store/nutritionStore';
+import { isoDate } from '@/features/alarm/logic';
+import { MEAL_TYPES, dailyTotals } from '@/features/nutrition/logic';
+import type { MealType } from '@/types';
 
-/**
- * AI-nutrition module — intentionally a "coming soon" surface. The photo → AI
- * calorie flow is not wired to any model yet; tapping "scan" reveals an
- * in-development state (with an optional notify-me) rather than calling an API.
- * The screen still communicates the planned value so it reads as a real feature
- * in progress. When the model is ready, replace the dev panel with the capture
- * flow (see docs/ARCHITECTURE.md → "Модуль 3: AI-питание").
- */
 export default function NutritionTab() {
   const theme = useTheme();
+  const router = useRouter();
   const { t } = useTranslation();
-  const [revealed, setRevealed] = useState(false);
-  const [notified, setNotified] = useState(false);
 
-  const features = [
-    { icon: '🔥', label: t('nutrition.featureCalories') },
-    { icon: '🍛', label: t('nutrition.featureUzbek') },
-    { icon: '✏️', label: t('nutrition.featureManual') },
-  ];
+  const entries = useNutritionStore((s) => s.entries);
+  const removeMeal = useNutritionStore((s) => s.removeMeal);
+  const targets = useNutritionStore((s) => s.targets());
+
+  const today = isoDate(new Date());
+  const totals = useMemo(() => dailyTotals(entries, today), [entries, today]);
+  const todays = useMemo(() => entries.filter((e) => e.date === today), [entries, today]);
+
+  const pct = targets.kcal > 0 ? totals.kcal / targets.kcal : 0;
+  const diff = targets.kcal - totals.kcal;
 
   return (
     <Screen>
       <ScrollView contentContainerStyle={{ padding: spacing.lg, gap: spacing.lg }}>
         <Row style={{ justifyContent: 'space-between' }}>
           <AppText variant="h1">{t('nutrition.title')}</AppText>
-          <View
-            style={{
-              backgroundColor: theme.warning,
-              paddingHorizontal: spacing.md,
-              paddingVertical: spacing.xs,
-              borderRadius: radius.pill,
-            }}
-          >
-            <AppText variant="caption" color={theme.bg} style={{ fontWeight: '700' }}>
-              {t('nutrition.comingSoon')}
-            </AppText>
-          </View>
+          <Button
+            title="⚙︎"
+            variant="secondary"
+            onPress={() => router.push('/nutrition/profile')}
+          />
         </Row>
 
-        {/* Hero */}
-        <Card style={{ backgroundColor: theme.accent, alignItems: 'center' }}>
-          <AppText variant="display" style={{ fontSize: 56 }}>
-            📷
+        {/* Daily summary */}
+        <Card style={{ alignItems: 'center' }}>
+          <AppText variant="display" color={theme.primary}>
+            {totals.kcal}
           </AppText>
-          <AppText variant="h2" color="#fff" style={{ textAlign: 'center', marginTop: spacing.sm }}>
-            {t('nutrition.heroTitle')}
+          <AppText color={theme.textMuted}>
+            {t('nutrition.goal')}: {targets.kcal} {t('nutrition.kcal')}
           </AppText>
-          <AppText color="#fff" style={{ opacity: 0.9, textAlign: 'center', marginTop: spacing.sm }}>
-            {t('nutrition.heroSubtitle')}
+          <View style={{ width: '100%', marginTop: spacing.md }}>
+            <ProgressBar value={pct} color={pct > 1 ? theme.danger : theme.primary} />
+          </View>
+          <AppText style={{ marginTop: spacing.sm }} color={diff < 0 ? theme.danger : theme.text}>
+            {diff >= 0
+              ? t('nutrition.remaining', { kcal: diff })
+              : t('nutrition.over', { kcal: -diff })}
           </AppText>
+
+          {/* Macros */}
+          <Row style={{ marginTop: spacing.lg, gap: spacing.lg }}>
+            <Macro label={t('nutrition.protein')} value={totals.protein} target={targets.protein} theme={theme} />
+            <Macro label={t('nutrition.fat')} value={totals.fat} target={targets.fat} theme={theme} />
+            <Macro label={t('nutrition.carbs')} value={totals.carbs} target={targets.carbs} theme={theme} />
+          </Row>
         </Card>
 
-        {/* What it will do */}
-        <Card>
-          {features.map((f, i) => (
-            <Row key={f.label} style={{ marginTop: i === 0 ? 0 : spacing.md }}>
-              <AppText variant="h3">{f.icon}</AppText>
-              <AppText style={{ flex: 1 }}>{f.label}</AppText>
-            </Row>
-          ))}
-        </Card>
+        {/* Actions */}
+        <Row style={{ gap: spacing.md }}>
+          <Button title={t('nutrition.scan')} style={{ flex: 1 }} onPress={() => router.push('/nutrition/scan')} />
+        </Row>
 
-        {/* Scan CTA → reveals the in-development panel (no AI is run) */}
-        {!revealed ? (
-          <Button title={`📷 ${t('nutrition.scan')}`} onPress={() => setRevealed(true)} />
-        ) : (
-          <Card style={{ alignItems: 'center', borderColor: theme.warning }}>
-            <AppText variant="display" style={{ fontSize: 44 }}>
-              🚧
-            </AppText>
-            <AppText variant="h3" color={theme.warning} style={{ marginTop: spacing.sm }}>
-              {t('nutrition.inDevelopment')}
-            </AppText>
-            <AppText color={theme.textMuted} style={{ textAlign: 'center', marginTop: spacing.sm }}>
-              {t('nutrition.devMessage')}
-            </AppText>
-
-            {notified ? (
-              <AppText color={theme.success} style={{ marginTop: spacing.lg, textAlign: 'center' }}>
-                ✓ {t('nutrition.notifySaved')}
-              </AppText>
-            ) : (
-              <Button
-                title={t('nutrition.notifyMe')}
-                variant="secondary"
-                style={{ marginTop: spacing.lg }}
-                onPress={() => setNotified(true)}
-              />
-            )}
+        {/* Diary by meal */}
+        {todays.length === 0 ? (
+          <Card>
+            <AppText color={theme.textMuted}>{t('nutrition.empty')}</AppText>
           </Card>
+        ) : (
+          MEAL_TYPES.map((mt) => {
+            const rows = todays.filter((e) => e.mealType === mt);
+            if (rows.length === 0) return null;
+            return (
+              <Card key={mt}>
+                <AppText variant="label" color={theme.textMuted}>
+                  {t(`nutrition.meals.${mt as MealType}`)}
+                </AppText>
+                {rows.map((e) => (
+                  <Row key={e.id} style={{ justifyContent: 'space-between', marginTop: spacing.md }}>
+                    <View style={{ flex: 1 }}>
+                      <AppText>{e.name}</AppText>
+                      <AppText variant="caption" color={theme.textMuted}>
+                        {e.grams} г · {e.macros.kcal} {t('nutrition.kcal')}
+                        {e.source === 'ai_photo' ? ' · 📷' : ''}
+                      </AppText>
+                    </View>
+                    <Button title="✕" variant="ghost" onPress={() => removeMeal(e.id)} />
+                  </Row>
+                ))}
+              </Card>
+            );
+          })
         )}
+
+        {/* Disclaimer */}
+        <Card style={{ backgroundColor: theme.surfaceAlt }}>
+          <AppText variant="caption" color={theme.textMuted}>
+            ⚠️ {t('nutrition.disclaimer')}
+          </AppText>
+        </Card>
       </ScrollView>
     </Screen>
+  );
+}
+
+function Macro({
+  label,
+  value,
+  target,
+  theme,
+}: {
+  label: string;
+  value: number;
+  target: number;
+  theme: { textMuted: string };
+}) {
+  return (
+    <View style={{ alignItems: 'center', minWidth: 72 }}>
+      <AppText variant="h3">{value}</AppText>
+      <AppText variant="caption" color={theme.textMuted}>
+        {label}
+      </AppText>
+      <AppText variant="caption" color={theme.textMuted}>
+        / {target}г
+      </AppText>
+    </View>
   );
 }

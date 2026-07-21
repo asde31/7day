@@ -47,6 +47,9 @@ export default function RootLayout() {
             />
             <Stack.Screen name="breathing/[id]" options={{ presentation: 'modal' }} />
             <Stack.Screen name="breathing/sos" options={{ presentation: 'fullScreenModal' }} />
+            <Stack.Screen name="nutrition/scan" options={{ presentation: 'fullScreenModal' }} />
+            <Stack.Screen name="nutrition/result" options={{ presentation: 'modal' }} />
+            <Stack.Screen name="nutrition/profile" options={{ presentation: 'modal' }} />
           </Stack>
         </ThemeProvider>
       </SafeAreaProvider>
