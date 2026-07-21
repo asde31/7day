@@ -1,0 +1,75 @@
+{
+  "expo": {
+    "name": "7day",
+    "slug": "sevenday",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "sevenday",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": false,
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#0B1120"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "uz.sevenday.app",
+      "infoPlist": {
+        "UIBackgroundModes": ["audio", "location", "fetch", "remote-notification"],
+        "NSCameraUsageDescription": "Kamera используется для фото-верификации при отключении будильника и распознавания еды.",
+        "NSMicrophoneUsageDescription": "Микрофон используется для голосового произнесения аффирмации.",
+        "NSMotionUsageDescription": "Датчики движения используются для подсчёта шагов при отключении будильника.",
+        "NSLocationWhenInUseUsageDescription": "Геолокация используется для расчёта времени Fajr и GPS-трекинга тренировок."
+      }
+    },
+    "android": {
+      "package": "uz.sevenday.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#0B1120"
+      },
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO",
+        "ACTIVITY_RECOGNITION",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "SCHEDULE_EXACT_ALARM",
+        "USE_EXACT_ALARM",
+        "POST_NOTIFICATIONS",
+        "VIBRATE",
+        "WAKE_LOCK",
+        "FOREGROUND_SERVICE"
+      ]
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#22D3EE"
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Kamera используется для фото-верификации и распознавания еды."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Геолокация используется для Fajr и GPS-трекинга."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "supabaseUrl": "",
+      "supabaseAnonKey": ""
+    }
+  }
+}
