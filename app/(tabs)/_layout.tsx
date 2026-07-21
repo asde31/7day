@@ -45,6 +45,13 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="nutrition"
+        options={{
+          title: t('tabs.nutrition'),
+          tabBarIcon: ({ color }) => <TabIcon emoji="🍽️" color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="breathing"
         options={{
           title: t('tabs.breathing'),
