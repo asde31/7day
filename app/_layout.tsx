@@ -50,6 +50,9 @@ export default function RootLayout() {
             <Stack.Screen name="nutrition/scan" options={{ presentation: 'fullScreenModal' }} />
             <Stack.Screen name="nutrition/result" options={{ presentation: 'modal' }} />
             <Stack.Screen name="nutrition/profile" options={{ presentation: 'modal' }} />
+            <Stack.Screen name="fitness/index" />
+            <Stack.Screen name="fitness/[id]" options={{ presentation: 'fullScreenModal' }} />
+            <Stack.Screen name="fitness/admin" options={{ presentation: 'modal' }} />
           </Stack>
         </ThemeProvider>
       </SafeAreaProvider>

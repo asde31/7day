@@ -168,3 +168,26 @@ export interface MealEntry {
   source: MealSource;
   at: string;
 }
+
+// ---------------------------------------------------------------------------
+// Module 2: Fitness (video workouts)
+// ---------------------------------------------------------------------------
+
+export type WorkoutLevel = 'beginner' | 'intermediate' | 'advanced';
+export type WorkoutCategory = 'hiit' | 'yoga' | 'dance' | 'strength' | 'cardio' | 'meditation';
+export type WorkoutGender = 'all' | 'male' | 'female';
+
+export interface Workout {
+  id: string;
+  title: string;
+  description: string;
+  /** URL to the video stream (Cloudflare Stream / Mux / direct mp4/HLS). */
+  videoUrl: string;
+  thumbnailUrl?: string;
+  level: WorkoutLevel;
+  category: WorkoutCategory;
+  gender: WorkoutGender;
+  durationMin: number;
+  premium: boolean;
+  createdAt: string;
+}

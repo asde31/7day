@@ -95,6 +95,19 @@ export default function HomeScreen() {
           </View>
         </Card>
 
+        {/* Workouts */}
+        <Card onPress={() => router.push('/fitness')} style={{ backgroundColor: theme.surfaceAlt }}>
+          <Row style={{ justifyContent: 'space-between' }}>
+            <View style={{ flex: 1 }}>
+              <AppText variant="h3">🏋️ {t('home.workouts')}</AppText>
+              <AppText variant="caption" color={theme.textMuted} style={{ marginTop: spacing.xs }}>
+                {t('home.workoutsSub')}
+              </AppText>
+            </View>
+            <AppText variant="h2">›</AppText>
+          </Row>
+        </Card>
+
         {/* Breathing shortcuts */}
         <Row style={{ gap: spacing.md }}>
           <Button
