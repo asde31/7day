@@ -7,11 +7,10 @@
   --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
 }
 
-/* Telegram передаёт цвета темы через CSS-переменные — используем их для фона,
-   чтобы Mini App выглядел «родным» и в светлой, и в тёмной теме Telegram. */
+/* Светлая тема каталога. */
 body {
-  background-color: var(--tg-theme-secondary-bg-color, #f7efe2);
-  color: var(--tg-theme-text-color, #2b2430);
+  background-color: #fafafa;
+  color: #171717;
 }
 
 /* Плавный скролл и отсутствие «резинки» на мобилке */

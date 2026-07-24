@@ -1,9 +1,5 @@
 import type { PublicVendor } from '@/lib/types';
-
-function priceLabel(n: number | null): string | null {
-  if (n == null) return null;
-  return `от ${n.toLocaleString('ru-RU')} ₽`;
-}
+import { formatPrice } from '@/lib/uz';
 
 function initials(name: string): string {
   return name
@@ -14,78 +10,62 @@ function initials(name: string): string {
 }
 
 export default function VendorCard({ vendor }: { vendor: PublicVendor }) {
-  const price = priceLabel(vendor.priceFrom);
+  const price = formatPrice(vendor.priceFrom);
 
-  const contacts: { href: string; label: string; icon: string }[] = [];
-  if (vendor.phone) contacts.push({ href: `tel:${vendor.phone.replace(/\s/g, '')}`, label: 'Позвонить', icon: '📞' });
+  const contacts: { href: string; label: string }[] = [];
+  if (vendor.phone) contacts.push({ href: `tel:${vendor.phone.replace(/\s/g, '')}`, label: 'Позвонить' });
   if (vendor.telegram)
-    contacts.push({
-      href: `https://t.me/${vendor.telegram.replace(/^@/, '')}`,
-      label: 'Telegram',
-      icon: '✈️',
-    });
+    contacts.push({ href: `https://t.me/${vendor.telegram.replace(/^@/, '')}`, label: 'Telegram' });
   if (vendor.whatsapp)
-    contacts.push({
-      href: `https://wa.me/${vendor.whatsapp.replace(/[^\d]/g, '')}`,
-      label: 'WhatsApp',
-      icon: '🟢',
-    });
+    contacts.push({ href: `https://wa.me/${vendor.whatsapp.replace(/[^\d]/g, '')}`, label: 'WhatsApp' });
   if (vendor.instagram)
-    contacts.push({
-      href: `https://instagram.com/${vendor.instagram.replace(/^@/, '')}`,
-      label: 'Instagram',
-      icon: '📸',
-    });
-  if (vendor.website) contacts.push({ href: vendor.website, label: 'Сайт', icon: '🌐' });
+    contacts.push({ href: `https://instagram.com/${vendor.instagram.replace(/^@/, '')}`, label: 'Instagram' });
+  if (vendor.website) contacts.push({ href: vendor.website, label: 'Сайт' });
 
   return (
-    <article className="flex min-w-[260px] max-w-[280px] snap-start flex-col overflow-hidden rounded-xl2 bg-white shadow-card ring-1 ring-black/5">
-      <div className="relative h-36 w-full bg-blush-100">
+    <article className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-neutral-200/70 transition hover:shadow-lg">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
         {vendor.imageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={vendor.imageUrl}
             alt={vendor.name}
             loading="lazy"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-blush-200 to-blush-100 text-3xl font-display font-semibold text-blush-700">
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-rose-100 to-neutral-100 text-4xl font-semibold text-rose-400">
             {initials(vendor.name) || '💍'}
           </div>
         )}
         {vendor.isFeatured && (
-          <span className="absolute left-2 top-2 rounded-full bg-blush-600 px-2 py-0.5 text-[11px] font-semibold text-white shadow">
-            ⭐ Рекомендуем
+          <span className="absolute left-3 top-3 rounded-full bg-rose-500 px-2.5 py-1 text-[11px] font-semibold text-white shadow">
+            ★ Рекомендуем
           </span>
         )}
       </div>
 
-      <div className="flex flex-1 flex-col gap-1 p-3">
-        <h3 className="font-display text-base font-semibold leading-tight text-ink">{vendor.name}</h3>
-        {vendor.city && <p className="text-xs text-blush-700">📍 {vendor.city}</p>}
+      <div className="flex flex-1 flex-col p-4">
+        <h3 className="text-base font-semibold leading-tight text-neutral-900">{vendor.name}</h3>
+        {vendor.city && <p className="mt-1 text-sm text-neutral-500">📍 {vendor.city}</p>}
         {vendor.description && (
-          <p className="mt-0.5 line-clamp-3 text-sm text-ink/70">{vendor.description}</p>
+          <p className="mt-2 line-clamp-2 text-sm text-neutral-600">{vendor.description}</p>
         )}
-        <div className="mt-auto pt-2">
-          {price && <p className="mb-2 text-sm font-semibold text-ink">{price}</p>}
-          <div className="flex flex-wrap gap-1.5">
-            {contacts.map((c) => (
-              <a
-                key={c.label}
-                href={c.href}
-                target="_blank"
-                rel="noopener noreferrer nofollow"
-                className="inline-flex items-center gap-1 rounded-full bg-blush-50 px-2.5 py-1 text-xs font-medium text-blush-700 ring-1 ring-blush-200 transition active:scale-95"
-              >
-                <span aria-hidden>{c.icon}</span>
-                {c.label}
-              </a>
-            ))}
-            {contacts.length === 0 && (
-              <span className="text-xs text-ink/40">Контакты уточняются</span>
-            )}
-          </div>
+        {price && <p className="mt-3 text-sm font-semibold text-neutral-900">{price}</p>}
+
+        <div className="mt-3 flex flex-wrap gap-2 pt-1">
+          {contacts.map((c) => (
+            <a
+              key={c.label}
+              href={c.href}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="inline-flex items-center rounded-lg bg-neutral-100 px-3 py-1.5 text-xs font-medium text-neutral-700 transition hover:bg-rose-500 hover:text-white active:scale-95"
+            >
+              {c.label}
+            </a>
+          ))}
+          {contacts.length === 0 && <span className="text-xs text-neutral-400">Контакты уточняются</span>}
         </div>
       </div>
     </article>

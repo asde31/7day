@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { api } from '@/lib/client';
 import type { AdminCategory, AdminVendor } from '@/lib/types';
+import { UZ_CITIES, PHONE_PLACEHOLDER, formatPrice } from '@/lib/uz';
 
 export default function AdminPage() {
   const [authed, setAuthed] = useState<boolean | null>(null);
@@ -426,7 +427,7 @@ function VendorManager({ category, onCountChanged }: { category: AdminCategory; 
                   {v.name}
                 </p>
                 <p className="truncate text-xs text-ink/50">
-                  {[v.city, v.priceFrom ? `от ${v.priceFrom.toLocaleString('ru-RU')} ₽` : null]
+                  {[v.city, formatPrice(v.priceFrom)]
                     .filter(Boolean)
                     .join(' · ') || 'без деталей'}
                 </p>
@@ -551,12 +552,26 @@ function VendorForm({
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div className="sm:col-span-2">{field('Название *', 'name', { placeholder: 'Студия «Момент»' })}</div>
           <div className="sm:col-span-2">{field('Описание', 'description', { textarea: true, placeholder: 'Коротко об услугах' })}</div>
-          {field('Город', 'city', { placeholder: 'Москва' })}
-          {field('Цена от, ₽', 'priceFrom', { type: 'number', placeholder: '25000' })}
+          <label className="block">
+            <span className="mb-1 block text-xs font-medium text-ink/60">Город</span>
+            <select
+              value={f.city}
+              onChange={(e) => set('city', e.target.value)}
+              className="w-full rounded-lg border border-blush-200 px-3 py-2 text-sm outline-none focus:border-blush-500"
+            >
+              <option value="">— не выбран —</option>
+              {UZ_CITIES.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+          </label>
+          {field('Цена от, сум', 'priceFrom', { type: 'number', placeholder: '5000000' })}
           <div className="sm:col-span-2">{field('Ссылка на фото (URL)', 'imageUrl', { placeholder: 'https://…' })}</div>
-          {field('Телефон', 'phone', { placeholder: '+7 900 000-00-00' })}
+          {field('Телефон', 'phone', { placeholder: PHONE_PLACEHOLDER })}
           {field('Telegram', 'telegram', { placeholder: 'username' })}
-          {field('WhatsApp', 'whatsapp', { placeholder: '+7 900 000-00-00' })}
+          {field('WhatsApp', 'whatsapp', { placeholder: PHONE_PLACEHOLDER })}
           {field('Instagram', 'instagram', { placeholder: 'username' })}
           <div className="sm:col-span-2">{field('Сайт', 'website', { placeholder: 'https://…' })}</div>
         </div>
