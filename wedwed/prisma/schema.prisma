@@ -1,0 +1,57 @@
+// Prisma schema — свадебный каталог подрядчиков
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Блок сайта (категория подрядчиков): Ведущие, Фотографы, Площадки и т.д.
+model Category {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  subtitle  String?
+  emoji     String   @default("💍")
+  /// Порядок блока на странице (меньше — выше)
+  position  Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  vendors Vendor[]
+
+  @@index([position])
+}
+
+/// Подрядчик внутри блока (карточка исполнителя)
+model Vendor {
+  id          String   @id @default(cuid())
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  name        String
+  description String?  @db.Text
+  city        String?
+  priceFrom   Int?
+  imageUrl    String?
+
+  phone       String?
+  telegram    String?
+  instagram   String?
+  whatsapp    String?
+  website     String?
+
+  /// Порядок внутри блока (меньше — выше). "Поднять наверх" = position 0.
+  position    Int      @default(0)
+  isFeatured  Boolean  @default(false)
+  isActive    Boolean  @default(true)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([categoryId, position])
+  @@index([isActive])
+}

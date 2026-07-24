@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: wedwed-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: wedwed
+      POSTGRES_PASSWORD: wedwed
+      POSTGRES_DB: wedwed
+    ports:
+      - '5432:5432'
+    volumes:
+      - wedwed-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U wedwed']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  wedwed-pgdata:
