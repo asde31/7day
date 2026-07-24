@@ -5,10 +5,11 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // url       — пул соединений (Supabase pooler, порт 6543) для рантайма
-  // directUrl — прямое подключение (порт 5432) для миграций/db push
+  // url       — пул соединений (для рантайма, много одновременных пользователей)
+  // directUrl — прямое подключение (для миграций / db push)
+  // Имена переменных совпадают с теми, что Vercel/Neon прописывает автоматически.
   url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 /// Блок сайта (категория подрядчиков): Ведущие, Фотографы, Площадки и т.д.
