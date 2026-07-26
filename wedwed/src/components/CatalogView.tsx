@@ -99,7 +99,7 @@ export default function CatalogView({ catalog }: { catalog: PublicCategory[] }) 
             <button
               onClick={() => scrollToId('categories')}
               className="rounded-2xl px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:brightness-105 active:scale-95"
-              style={{ background: 'linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dk))' }}
+              style={{ background: 'linear-gradient(135deg, var(--accent-gold-dk), var(--accent-btn-deep))' }}
             >
               Смотреть каталог
             </button>

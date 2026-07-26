@@ -6,22 +6,26 @@
 :root {
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
-  --bg-base-1: #faf6ee;
-  --bg-base-2: #f0e6d2;
+  /* Мягкая свадебная палитра: тёплый бежевый + белый */
+  --bg-base-1: #fdfbf7;
+  --bg-base-2: #f2ebe0;
 
-  --glass-fill: rgba(255, 255, 255, 0.14);
-  --glass-fill-strong: rgba(255, 255, 255, 0.6);
-  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-fill: rgba(255, 255, 255, 0.35);
+  --glass-fill-strong: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.7);
 
-  --accent-gold: #c9a24b;
-  --accent-gold-dk: #a9822f;
-  --accent-emerald: #2f5d50;
+  /* «Золото» смягчено до тёплого шампань/тауп */
+  --accent-gold-light: #ece0cd;
+  --accent-gold: #c8b393;
+  --accent-gold-dk: #a08a68;
+  --accent-btn-deep: #7d6a4d; /* для кнопок с белым текстом (контраст) */
+  --accent-emerald: #9a8f7c;
 
-  --text-primary: #241e14;
-  --text-muted: #6b6152;
+  --text-primary: #3a3228;
+  --text-muted: #8a7f6f;
 
-  --shadow-soft: 0 8px 32px rgba(36, 30, 20, 0.08);
-  --shadow-lift: 0 16px 40px rgba(36, 30, 20, 0.14);
+  --shadow-soft: 0 10px 30px rgba(120, 100, 70, 0.10);
+  --shadow-lift: 0 18px 40px rgba(120, 100, 70, 0.16);
   --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -47,8 +51,8 @@ body {
 .aurora span {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(90px);
-  opacity: 0.5;
+  filter: blur(100px);
+  opacity: 0.4;
   will-change: transform;
 }
 .aurora .b1 {
@@ -56,7 +60,7 @@ body {
   height: 42vw;
   left: -8vw;
   top: -6vw;
-  background: radial-gradient(circle at 30% 30%, #e7c877, transparent 70%);
+  background: radial-gradient(circle at 30% 30%, #f3e7d3, transparent 70%);
   animation: drift1 22s var(--spring) infinite alternate;
 }
 .aurora .b2 {
@@ -64,7 +68,7 @@ body {
   height: 38vw;
   right: -6vw;
   top: 10vh;
-  background: radial-gradient(circle at 60% 40%, #9fc7b8, transparent 70%);
+  background: radial-gradient(circle at 60% 40%, #f7f2ea, transparent 70%);
   animation: drift2 26s var(--spring) infinite alternate;
 }
 .aurora .b3 {
@@ -72,7 +76,7 @@ body {
   height: 46vw;
   left: 20vw;
   bottom: -14vw;
-  background: radial-gradient(circle at 50% 50%, #f0d9a8, transparent 70%);
+  background: radial-gradient(circle at 50% 50%, #efe3d2, transparent 70%);
   animation: drift3 30s var(--spring) infinite alternate;
 }
 @keyframes drift1 { to { transform: translate(6vw, 4vh) scale(1.1); } }
@@ -127,13 +131,13 @@ body {
 /* ─── Восковая печать (hero-якорь) ─────────────────────────────────────── */
 .wax-seal {
   background:
-    radial-gradient(circle at 35% 30%, #e3c273, transparent 55%),
-    radial-gradient(circle at 65% 75%, #a9822f, transparent 60%),
-    linear-gradient(135deg, #c9a24b, #a9822f);
+    radial-gradient(circle at 35% 30%, #f3e6d2, transparent 55%),
+    radial-gradient(circle at 65% 75%, #b7a082, transparent 60%),
+    linear-gradient(135deg, #d8c4a4, #b39c78);
   box-shadow:
-    inset 0 2px 6px rgba(255, 255, 255, 0.45),
-    inset 0 -6px 14px rgba(90, 62, 15, 0.5),
-    0 10px 30px rgba(169, 130, 47, 0.4);
+    inset 0 2px 6px rgba(255, 255, 255, 0.55),
+    inset 0 -6px 14px rgba(120, 96, 60, 0.35),
+    0 10px 26px rgba(160, 138, 104, 0.32);
   border-radius: 9999px;
 }
 
