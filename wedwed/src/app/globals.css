@@ -5,6 +5,8 @@
 /* ─── Дизайн-токены Uzlav · Liquid Glass (light) ───────────────────────── */
 :root {
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* Элегантный серифный заголовочный шрифт (системные серифы, без внешних CDN) */
+  --font-display: 'Cormorant Garamond', 'Playfair Display', 'Times New Roman', Georgia, serif;
 
   /* Мягкая свадебная палитра: тёплый бежевый + белый */
   --bg-base-1: #fdfbf7;
@@ -38,6 +40,13 @@ body {
   background: linear-gradient(160deg, var(--bg-base-1), var(--bg-base-2));
   background-attachment: fixed;
   color: var(--text-primary);
+  font-family: var(--font-sans);
+}
+
+/* Элегантные серифные заголовки — «свадебный» тон */
+h1, h2 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
 }
 
 /* ─── Живой фон под стеклом (мягкие цветные blur-пятна) ─────────────────── */

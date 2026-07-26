@@ -56,15 +56,21 @@ export default function CatalogView({ catalog }: { catalog: PublicCategory[] }) 
           </span>
 
           <nav className="ml-auto hidden items-center gap-1 lg:flex">
-            {catalog.slice(0, 5).map((c) => (
-              <button
+            {catalog.slice(0, 4).map((c) => (
+              <Link
                 key={c.id}
-                onClick={() => scrollTo(c.slug)}
+                href={`/catalog/${c.slug}`}
                 className="rounded-xl px-3 py-2 text-sm font-medium text-muted transition hover:bg-white/50 hover:text-ink"
               >
                 {c.title}
-              </button>
+              </Link>
             ))}
+            <Link
+              href="/planner"
+              className="rounded-xl px-3 py-2 text-sm font-medium text-muted transition hover:bg-white/50 hover:text-ink"
+            >
+              Планировщик
+            </Link>
           </nav>
 
           <div className="ml-auto lg:ml-0">
@@ -146,6 +152,66 @@ export default function CatalogView({ catalog }: { catalog: PublicCategory[] }) 
               <p className="mt-1 text-sm text-muted">{s.text}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ── Планировщик ───────────────────────────────────────────── */}
+      <section className="mx-auto max-w-6xl px-4 pt-14">
+        <h2 className="mb-1 text-xl font-bold tracking-tight text-ink">Планируйте свадьбу онлайн</h2>
+        <p className="mb-5 text-sm text-muted">Удобные инструменты подготовки — прямо в телефоне, бесплатно.</p>
+        <div className="grid gap-3 lg:grid-cols-[1.3fr_1fr]">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {[
+              { icon: '✅', title: 'Чек-лист дел', href: '/planner' },
+              { icon: '💰', title: 'Бюджет', href: '/planner' },
+              { icon: '👥', title: 'Список гостей', href: '/planner' },
+              { icon: '⏱️', title: 'Тайминг дня', soon: true },
+              { icon: '🪑', title: 'План рассадки', soon: true },
+              { icon: '❤️', title: 'Избранное', soon: true },
+            ].map((t) =>
+              t.soon ? (
+                <div
+                  key={t.title}
+                  className="glass-card flex cursor-default flex-col items-start gap-2 p-4 opacity-60"
+                >
+                  <span className="text-2xl">{t.icon}</span>
+                  <span className="text-sm font-semibold text-ink">{t.title}</span>
+                  <span className="text-[11px] text-muted">скоро</span>
+                </div>
+              ) : (
+                <Link key={t.title} href={t.href!} className="glass-card flex flex-col items-start gap-2 p-4">
+                  <span className="text-2xl">{t.icon}</span>
+                  <span className="text-sm font-semibold text-ink">{t.title}</span>
+                  <span className="text-[11px]" style={{ color: 'var(--accent-emerald)' }}>открыть →</span>
+                </Link>
+              )
+            )}
+          </div>
+
+          <div className="glass flex flex-col justify-center gap-4 rounded-3xl p-6">
+            {[
+              'Всё для подготовки в одном месте',
+              'Доступно с телефона в любое время',
+              'Бесплатно, без регистрации',
+            ].map((line) => (
+              <div key={line} className="flex items-start gap-3">
+                <span
+                  className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full text-white"
+                  style={{ background: 'var(--accent-emerald)' }}
+                >
+                  ✓
+                </span>
+                <span className="text-sm font-medium text-ink">{line}</span>
+              </div>
+            ))}
+            <Link
+              href="/planner"
+              className="mt-1 rounded-2xl px-5 py-2.5 text-center text-sm font-semibold text-white"
+              style={{ background: 'linear-gradient(135deg, var(--accent-gold-dk), var(--accent-btn-deep))' }}
+            >
+              Начать планирование
+            </Link>
+          </div>
         </div>
       </section>
 

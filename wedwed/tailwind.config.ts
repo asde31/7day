@@ -25,6 +25,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'Georgia', 'serif'],
       },
       transitionTimingFunction: {
         spring: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
