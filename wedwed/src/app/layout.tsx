@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Telegram Mini App SDK — доступен как window.Telegram.WebApp */}
         <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
       </head>
-      <body className="min-h-screen bg-neutral-50 text-neutral-900 antialiased">{children}</body>
+      <body className="min-h-screen text-ink antialiased">{children}</body>
     </html>
   );
 }

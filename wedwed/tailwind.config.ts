@@ -5,7 +5,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Мягкая свадебная палитра (blush / rose / champagne)
+        // Бренд Uzlav: кремово-золотая + emerald
+        cream: { DEFAULT: '#faf6ee', deep: '#f0e6d2' },
+        gold: { DEFAULT: '#c9a24b', dk: '#a9822f', light: '#e3c273' },
+        emerald2: '#2f5d50',
+        ink: '#241e14',
+        muted: '#6b6152',
+        // сохраняем blush для существующей админки
         blush: {
           50: '#fdf6f7',
           100: '#fbeaee',
@@ -15,21 +21,17 @@ const config: Config = {
           500: '#d15b83',
           600: '#bd3f6c',
           700: '#9e2f57',
-          800: '#842a4a',
-          900: '#712742',
         },
-        champagne: '#f7efe2',
-        ink: '#2b2430',
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-display)', 'Georgia', 'serif'],
       },
-      boxShadow: {
-        card: '0 4px 24px -8px rgba(113, 39, 66, 0.18)',
+      transitionTimingFunction: {
+        spring: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
       },
       borderRadius: {
         xl2: '1.25rem',
+        '3xl': '1.75rem',
       },
     },
   },

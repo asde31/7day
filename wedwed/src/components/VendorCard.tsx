@@ -23,8 +23,8 @@ export default function VendorCard({ vendor }: { vendor: PublicVendor }) {
   if (vendor.website) contacts.push({ href: vendor.website, label: 'Сайт' });
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-neutral-200/70 transition hover:shadow-lg">
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
+    <article className="glass-card group flex flex-col overflow-hidden">
+      <div className="relative m-1.5 aspect-[4/3] overflow-hidden rounded-[18px] bg-cream-deep">
         {vendor.imageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -34,24 +34,28 @@ export default function VendorCard({ vendor }: { vendor: PublicVendor }) {
             className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-rose-100 to-neutral-100 text-4xl font-semibold text-rose-400">
+          <div
+            className="flex h-full w-full items-center justify-center text-4xl font-semibold text-white"
+            style={{ background: 'linear-gradient(135deg, var(--accent-gold-light), var(--accent-gold))' }}
+          >
             {initials(vendor.name) || '💍'}
           </div>
         )}
         {vendor.isFeatured && (
-          <span className="absolute left-3 top-3 rounded-full bg-rose-500 px-2.5 py-1 text-[11px] font-semibold text-white shadow">
+          <span
+            className="glass-pill absolute left-2 top-2 rounded-full px-2.5 py-1 text-[11px] font-semibold text-ink"
+            style={{ color: 'var(--accent-gold-dk)' }}
+          >
             ★ Рекомендуем
           </span>
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-4">
-        <h3 className="text-base font-semibold leading-tight text-neutral-900">{vendor.name}</h3>
-        {vendor.city && <p className="mt-1 text-sm text-neutral-500">📍 {vendor.city}</p>}
-        {vendor.description && (
-          <p className="mt-2 line-clamp-2 text-sm text-neutral-600">{vendor.description}</p>
-        )}
-        {price && <p className="mt-3 text-sm font-semibold text-neutral-900">{price}</p>}
+      <div className="flex flex-1 flex-col px-3.5 pb-3.5 pt-1">
+        <h3 className="text-base font-semibold leading-tight text-ink">{vendor.name}</h3>
+        {vendor.city && <p className="mt-1 text-sm text-muted">📍 {vendor.city}</p>}
+        {vendor.description && <p className="mt-2 line-clamp-2 text-sm text-muted">{vendor.description}</p>}
+        {price && <p className="mt-3 text-sm font-bold text-ink">{price}</p>}
 
         <div className="mt-3 flex flex-wrap gap-2 pt-1">
           {contacts.map((c) => (
@@ -60,12 +64,12 @@ export default function VendorCard({ vendor }: { vendor: PublicVendor }) {
               href={c.href}
               target="_blank"
               rel="noopener noreferrer nofollow"
-              className="inline-flex items-center rounded-lg bg-neutral-100 px-3 py-1.5 text-xs font-medium text-neutral-700 transition hover:bg-rose-500 hover:text-white active:scale-95"
+              className="glass-pill inline-flex items-center rounded-xl px-3 py-1.5 text-xs font-medium text-ink transition hover:brightness-105 active:scale-95"
             >
               {c.label}
             </a>
           ))}
-          {contacts.length === 0 && <span className="text-xs text-neutral-400">Контакты уточняются</span>}
+          {contacts.length === 0 && <span className="text-xs text-muted">Контакты уточняются</span>}
         </div>
       </div>
     </article>
