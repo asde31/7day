@@ -39,7 +39,12 @@ model Vendor {
   name        String
   description String?  @db.Text
   city        String?
+  address     String?
   priceFrom   Int?
+  /// Вместимость (гостей) — актуально для площадок
+  capacity    Int?
+  /// Удобства/особенности: веранда, на природе, свой алкоголь и т.п.
+  tags        String[] @default([])
   imageUrl    String?
 
   phone       String?

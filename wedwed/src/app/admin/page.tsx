@@ -462,6 +462,9 @@ function VendorForm({
     name: vendor?.name ?? '',
     description: vendor?.description ?? '',
     city: vendor?.city ?? '',
+    address: vendor?.address ?? '',
+    capacity: vendor?.capacity?.toString() ?? '',
+    tags: (vendor?.tags ?? []).join(', '),
     priceFrom: vendor?.priceFrom?.toString() ?? '',
     imageUrl: vendor?.imageUrl ?? '',
     phone: vendor?.phone ?? '',
@@ -488,6 +491,9 @@ function VendorForm({
       name: f.name,
       description: f.description,
       city: f.city,
+      address: f.address,
+      capacity: f.capacity ? Number(f.capacity) : null,
+      tags: f.tags.split(',').map((t) => t.trim()).filter(Boolean),
       priceFrom: f.priceFrom ? Number(f.priceFrom) : null,
       imageUrl: f.imageUrl,
       phone: f.phone,
@@ -568,6 +574,13 @@ function VendorForm({
             </select>
           </label>
           {field('Цена от, сум', 'priceFrom', { type: 'number', placeholder: '5000000' })}
+          {field('Вместимость, гостей', 'capacity', { type: 'number', placeholder: '150' })}
+          <div className="sm:col-span-2">{field('Адрес', 'address', { placeholder: 'Улица, ориентир' })}</div>
+          <div className="sm:col-span-2">
+            {field('Удобства (через запятую)', 'tags', {
+              placeholder: 'веранда, на природе, парковка, свой алкоголь',
+            })}
+          </div>
           <div className="sm:col-span-2">{field('Ссылка на фото (URL)', 'imageUrl', { placeholder: 'https://…' })}</div>
           {field('Телефон', 'phone', { placeholder: PHONE_PLACEHOLDER })}
           {field('Telegram', 'telegram', { placeholder: 'username' })}

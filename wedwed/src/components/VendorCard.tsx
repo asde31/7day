@@ -53,8 +53,20 @@ export default function VendorCard({ vendor }: { vendor: PublicVendor }) {
 
       <div className="flex flex-1 flex-col px-3.5 pb-3.5 pt-1">
         <h3 className="text-base font-semibold leading-tight text-ink">{vendor.name}</h3>
-        {vendor.city && <p className="mt-1 text-sm text-muted">📍 {vendor.city}</p>}
+        {(vendor.city || vendor.address) && (
+          <p className="mt-1 text-sm text-muted">📍 {[vendor.city, vendor.address].filter(Boolean).join(', ')}</p>
+        )}
+        {vendor.capacity ? <p className="mt-0.5 text-sm text-muted">👥 до {vendor.capacity} гостей</p> : null}
         {vendor.description && <p className="mt-2 line-clamp-2 text-sm text-muted">{vendor.description}</p>}
+        {vendor.tags.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-1">
+            {vendor.tags.slice(0, 4).map((t) => (
+              <span key={t} className="rounded-full bg-cream-deep px-2 py-0.5 text-[11px] text-muted">
+                {t}
+              </span>
+            ))}
+          </div>
+        )}
         {price && <p className="mt-3 text-sm font-bold text-ink">{price}</p>}
 
         <div className="mt-3 flex flex-wrap gap-2 pt-1">

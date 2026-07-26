@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import type { PublicCategory } from '@/lib/types';
 import { REGION_NAME, UZ_CITIES } from '@/lib/uz';
@@ -118,15 +119,15 @@ export default function CatalogView({ catalog }: { catalog: PublicCategory[] }) 
         <h2 className="mb-4 text-xl font-bold tracking-tight text-ink">Категории</h2>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
           {catalog.map((c) => (
-            <button
+            <Link
               key={c.id}
-              onClick={() => scrollTo(c.slug)}
+              href={`/catalog/${c.slug}`}
               className="glass-card flex aspect-[4/5] flex-col items-start justify-end p-4 text-left"
             >
               <span className="mb-auto text-3xl">{c.emoji}</span>
               <span className="text-base font-semibold text-ink">{c.title}</span>
               {c.subtitle && <span className="mt-0.5 text-xs text-muted">{c.subtitle}</span>}
-            </button>
+            </Link>
           ))}
         </div>
       </section>

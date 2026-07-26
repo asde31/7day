@@ -3,7 +3,10 @@ export interface PublicVendor {
   name: string;
   description: string | null;
   city: string | null;
+  address: string | null;
   priceFrom: number | null;
+  capacity: number | null;
+  tags: string[];
   imageUrl: string | null;
   phone: string | null;
   telegram: string | null;
@@ -39,7 +42,10 @@ export interface AdminVendor {
   name: string;
   description: string | null;
   city: string | null;
+  address: string | null;
   priceFrom: number | null;
+  capacity: number | null;
+  tags: string[];
   imageUrl: string | null;
   phone: string | null;
   telegram: string | null;
