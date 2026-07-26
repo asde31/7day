@@ -4,17 +4,17 @@ const prisma = new PrismaClient();
 
 // Базовые блоки свадебного каталога. Их можно менять/добавлять из админки.
 const categories = [
-  { slug: 'venues', title: 'Площадки', subtitle: 'Рестораны, банкетные залы, лофты', emoji: '🏛️' },
+  { slug: 'venues', title: 'Площадки', subtitle: 'Рестораны, банкетные залы, лофты', emoji: '💒' },
   { slug: 'hosts', title: 'Ведущие', subtitle: 'Тамада и шоумены', emoji: '🎤' },
-  { slug: 'photo', title: 'Фотографы', subtitle: 'Свадебная фотосъёмка', emoji: '📷' },
-  { slug: 'video', title: 'Видеографы', subtitle: 'Видеосъёмка и клипы', emoji: '🎬' },
+  { slug: 'photo', title: 'Фотографы', subtitle: 'Свадебная фотосъёмка', emoji: '📸' },
+  { slug: 'video', title: 'Видеографы', subtitle: 'Видеосъёмка и клипы', emoji: '🎥' },
   { slug: 'decor', title: 'Декор и флористика', subtitle: 'Оформление, цветы', emoji: '💐' },
-  { slug: 'music', title: 'Музыка и DJ', subtitle: 'Кавер-группы, диджеи', emoji: '🎵' },
+  { slug: 'music', title: 'Музыка и DJ', subtitle: 'Кавер-группы, диджеи', emoji: '🎶' },
   { slug: 'stylists', title: 'Визажисты и стилисты', subtitle: 'Причёска и макияж', emoji: '💄' },
-  { slug: 'dresses', title: 'Платья и костюмы', subtitle: 'Салоны и ателье', emoji: '👗' },
+  { slug: 'dresses', title: 'Платья и костюмы', subtitle: 'Салоны и ателье', emoji: '👰' },
   { slug: 'cakes', title: 'Торты и кейтеринг', subtitle: 'Кондитеры, фуршет', emoji: '🎂' },
-  { slug: 'transport', title: 'Транспорт', subtitle: 'Авто, лимузины, кортеж', emoji: '🚗' },
-  { slug: 'organizers', title: 'Организаторы', subtitle: 'Свадебные агентства', emoji: '📋' },
+  { slug: 'transport', title: 'Транспорт', subtitle: 'Авто, лимузины, кортеж', emoji: '🚘' },
+  { slug: 'organizers', title: 'Организаторы', subtitle: 'Свадебные агентства', emoji: '🤝' },
 ];
 
 async function main() {

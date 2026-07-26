@@ -59,15 +59,15 @@ END $$;
 -- Добавляются только если блока с таким slug ещё нет (можно запускать повторно).
 INSERT INTO "Category" ("id","slug","title","subtitle","emoji","position","updatedAt")
 VALUES
-  (gen_random_uuid()::text,'venues','Площадки','Рестораны, банкетные залы, лофты','🏛️',0,now()),
+  (gen_random_uuid()::text,'venues','Площадки','Рестораны, банкетные залы, лофты','💒',0,now()),
   (gen_random_uuid()::text,'hosts','Ведущие','Тамада и шоумены','🎤',1,now()),
-  (gen_random_uuid()::text,'photo','Фотографы','Свадебная фотосъёмка','📷',2,now()),
-  (gen_random_uuid()::text,'video','Видеографы','Видеосъёмка и клипы','🎬',3,now()),
+  (gen_random_uuid()::text,'photo','Фотографы','Свадебная фотосъёмка','📸',2,now()),
+  (gen_random_uuid()::text,'video','Видеографы','Видеосъёмка и клипы','🎥',3,now()),
   (gen_random_uuid()::text,'decor','Декор и флористика','Оформление, цветы','💐',4,now()),
-  (gen_random_uuid()::text,'music','Музыка и DJ','Кавер-группы, диджеи','🎵',5,now()),
+  (gen_random_uuid()::text,'music','Музыка и DJ','Кавер-группы, диджеи','🎶',5,now()),
   (gen_random_uuid()::text,'stylists','Визажисты и стилисты','Причёска и макияж','💄',6,now()),
-  (gen_random_uuid()::text,'dresses','Платья и костюмы','Салоны и ателье','👗',7,now()),
+  (gen_random_uuid()::text,'dresses','Платья и костюмы','Салоны и ателье','👰',7,now()),
   (gen_random_uuid()::text,'cakes','Торты и кейтеринг','Кондитеры, фуршет','🎂',8,now()),
-  (gen_random_uuid()::text,'transport','Транспорт','Авто, лимузины, кортеж','🚗',9,now()),
-  (gen_random_uuid()::text,'organizers','Организаторы','Свадебные агентства','📋',10,now())
+  (gen_random_uuid()::text,'transport','Транспорт','Авто, лимузины, кортеж','🚘',9,now()),
+  (gen_random_uuid()::text,'organizers','Организаторы','Свадебные агентства','🤝',10,now())
 ON CONFLICT ("slug") DO NOTHING;
